@@ -285,7 +285,6 @@ describe('My first test', function()
             cy.get('#password').type(credentials.password1 , {force:true})
             cy.get('.custom_sign_in').find('#sign_in_submit').type(`{enter}`,{force:true})
             
-            cy.wait(4000)
             
         })
            
