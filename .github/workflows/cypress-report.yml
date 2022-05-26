@@ -1,7 +1,8 @@
+   
 # This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
 # For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
 
-name: Generate Cypress Report
+name: Generate Cypress Reports
 on:
   push:
     branches:
@@ -20,8 +21,12 @@ jobs:
         $(npm bin)/cypress verify
         
     - name: Run cypress tests
-      run: npm run test:chrome
-      continue-on-error: false
+      uses: cypress-io/github-action@v2
+      with:
+          # Specify Browser since container image is compile with Firefox
+          browser: chrome
+      continue-on-error: true
+    
       
     - name: Copy test execution videos and screenshots
       run: |
@@ -30,11 +35,11 @@ jobs:
         cp -r cypress/screenshots public/screenshots
       
    
-    - name: Merge test reports
-      run: npm run combine:report
-      
-    - name: Generate html report
-      run: npm run generate:report
+    - name: Merge test results into one
+      run: npm run report:merge
+  
+    - name: Generate HTML report
+      run: npm run report:generate
           
     - name: Deploy report page to Github Page
       uses: peaceiris/actions-gh-pages@v3
@@ -44,6 +49,3 @@ jobs:
           
 
         
-        
-      
-    
