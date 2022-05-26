@@ -3,13 +3,24 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {
-    "test": "chrome"
-  },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "cypress": "^9.7.0"
+},
+"devDependencies": {
+  "cypress-multi-reporters": "^1.4.0",
+  "mocha": "^8.0.1",
+  "mochawesome": "^6.1.1",
+  "mochawesome-merge": "^4.1.0",
+  "mochawesome-report-generator": "^5.1.0"
+},
+
+  "scripts": {
+    "test: chrome": "cypress run --browser chrome",
+     "report:merge": "mochawesome-merge cypress/results/json/*.json > index.json",
+     "report:generate": "marge index.json --reportDir public --assetsDir public/assets --reportPageTitle index.html"
   }
-}
+  
+  }
